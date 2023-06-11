@@ -119,13 +119,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               const Padding(
-                                padding: EdgeInsets.only(left: 10.0),
-                                child: CustomText(
-                                    text: '19°c',
-                                    fontSize: 50,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w600),
-                              )
+                                  padding: EdgeInsets.only(left: 15.5),
+                                  child: Text.rich(TextSpan(children: [
+                                    TextSpan(
+                                        text: '19°',
+                                        style: TextStyle(
+                                            fontFamily: font,
+                                            fontSize: 55,
+                                            fontWeight: FontWeight.w600)),
+                                    TextSpan(
+                                        text: 'c',
+                                        style: TextStyle(
+                                            fontFamily: font,
+                                            fontSize: 55,
+                                            fontWeight: FontWeight.w600))
+                                  ])))
                             ],
                           ),
                           SizedBox(
@@ -244,7 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10,
             ),
             Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Padding(
                   padding: EdgeInsets.only(left: 16),
@@ -294,8 +301,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-            Row(
-              children: [ActiveContainer()],
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ActiveContainer(
+                  iconPath: 'assets/icons/cooling.png',
+                  deviceType: 'AC',
+                  button: 'assets/icons/off.png',
+                  room: 'Living Room',
+                  state: '19°',
+                  temperature: true,
+                  unit: 'Temperature',
+                ),
+                ActiveContainer(
+                  iconPath: 'assets/icons/hang_lamp.png', 
+                  button: 'assets/icons/off.png', 
+                  temperature: false, 
+                  deviceType: 'Lamp', 
+                  room: 'Dining Room', 
+                  state: 'White', 
+                  unit: 'Color'
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 50,
+                width: 342,
+                child: MaterialButton(
+                  onPressed: (){},
+                  child: const CustomText(
+                    text: 'Turn Off All Devices', 
+                    fontSize: body3, 
+                    fontFamily: font, 
+                    fontWeight: FontWeight.w600
+                  )
+                ),
+              ),
             )
           ],
         ),
@@ -304,17 +347,40 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class ActiveContainer extends StatelessWidget {
+class ActiveContainer extends StatefulWidget {
   const ActiveContainer({
-    // required this.icon,
-    // required this.
+    required this.iconPath,
+    required this.button,
+    required this.temperature,
+    required this.deviceType,
+    required this.room,
+    required this.state,
+    required this.unit,
     super.key,
   });
-  // TextSpan ts;
+
+  final String iconPath, button, deviceType, room, state, unit;
+  final bool temperature;
+
+  @override
+  State<ActiveContainer> createState() => _ActiveContainerState();
+}
+
+class _ActiveContainerState extends State<ActiveContainer> {
+
+  final TextSpan celsius = const TextSpan(
+                              text: 'c',
+                              style: TextStyle(
+                                  fontFamily: font,
+                                  fontSize: caption1,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white));
+
+  
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 141,
+      height: 121,
       width: 165,
       decoration: BoxDecoration(
           color: const Color(0xff9a7265),
@@ -328,43 +394,41 @@ class ActiveContainer extends StatelessWidget {
                 child: SizedBox(
                   height: 75,
                   width: 75.84,
-                  child: Image.asset('assets/icons/cooling.png'),
+                  child: Image.asset(widget.iconPath),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 26.5),
+              Padding(
+                padding: const EdgeInsets.only(top: 26.5),
                 child: SizedBox(
                   height: 52,
                   width: 72,
                   child: Column(
                     children: [
                       Text(
-                        'Temperature',
-                        style: TextStyle(
+                        widget.unit,
+                        style: const TextStyle(
                             fontFamily: font,
                             fontSize: caption1,
                             fontWeight: FontWeight.w400,
                             color: Colors.white),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 36.0),
-                        child: Text.rich(TextSpan(children: [
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Text.rich(
                           TextSpan(
-                            text: '19°',
-                            style: TextStyle(
-                                fontFamily: font,
-                                fontSize: body1,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white),
-                          ),
-                          TextSpan(
-                              text: 'c',
-                              style: TextStyle(
-                                  fontFamily: font,
-                                  fontSize: caption1,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white))
-                        ])),
+                            children: [
+                              TextSpan(
+                                text: widget.state,
+                                style: const TextStyle(
+                                    fontFamily: font,
+                                    fontSize: body1,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                              widget.temperature ? celsius : const TextSpan()
+                            ]
+                          )
+                        ),
                       ),
                     ],
                   ),
@@ -374,14 +438,14 @@ class ActiveContainer extends StatelessWidget {
           ),
           Row(
             children: [
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 12.0),
+                    padding: const EdgeInsets.only(left: 12.0),
                     child: Text(
-                      'AC',
-                      style: TextStyle(
+                      widget.deviceType,
+                      style: const TextStyle(
                           fontFamily: font,
                           fontSize: body1,
                           fontWeight: FontWeight.w600,
@@ -389,10 +453,10 @@ class ActiveContainer extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(12, 4, 16, 0),
+                    padding: const EdgeInsets.fromLTRB(12, 2, 16, 0),
                     child: Text(
-                      'Living Room',
-                      style: TextStyle(
+                      widget.room,
+                      style: const TextStyle(
                           fontFamily: font,
                           fontSize: caption1,
                           fontWeight: FontWeight.w400,
@@ -402,11 +466,11 @@ class ActiveContainer extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                padding: const EdgeInsets.only(top: 11),
                 child: SizedBox(
                     height: 24,
                     width: 55,
-                    child: Image.asset('assets/icons/off.png')),
+                    child: Image.asset(widget.button)),
               )
             ],
           )
@@ -531,8 +595,7 @@ class PowerUsageContainer extends StatelessWidget {
       height: 60,
       width: 152,
       decoration: BoxDecoration(
-          color: const Color(0xfff4f4f4),
-          borderRadius: BorderRadius.circular(20)),
+          color: Colors.white30, borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(4.5),
         child: Row(
@@ -603,7 +666,8 @@ class CustomContainer extends StatelessWidget {
         height: 60,
         width: 96.67,
         decoration: BoxDecoration(
-            color: const Color(0xfff4f4f4),
+            color: Colors.white30,
+            // color: const Color(0xfff4f4f4),
             borderRadius: BorderRadius.circular(20)),
         child: Column(
           children: [
