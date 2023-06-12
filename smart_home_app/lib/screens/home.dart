@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_home_app/constants/fontsize_and_colors.dart';
 import 'package:smart_home_app/screens/components/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,22 +9,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
-const double caption1 = 12;
-const double body1 = 18;
-const double body2 = 16;
-const double body3 = 14;
-const String font = 'Roboto';
-int currentIndex = 0;
-double navigationContainerWidth = 352;
-List navText = ['Home', 'Smart', 'Usage', 'User'];
-List icons = ['home.png', 'net.png', 'pie.png', 'user.png'];
-List activeIcons = [
-  'home_fill.png',
-  'net_fill.png',
-  'pie_fill.png',
-  'user_fill.png'
-];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -351,90 +336,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   height: 64,
-      //   width: 350,
-      //   padding: const EdgeInsets.symmetric(horizontal: 37.5),
-      //   decoration: BoxDecoration(
-      //       color: const Color(0xff4c7380),
-      //       borderRadius: BorderRadius.circular(10)),
-      //   child: ListView.builder(
-      //     itemCount: 4,
-      //     scrollDirection: Axis.horizontal,
-      //     itemBuilder: (context, index) => InkWell(
-      //       onTap: () {
-      //         setState(() {
-      //           currentIndex = index;
-      //         });
-              
-      //       },
-      //       splashColor: Colors.transparent,
-      //       highlightColor: Colors.transparent,
-      //       child: Stack(
-      //         children: [
-      //           AnimatedContainer(
-      //             duration: const Duration(seconds: 1),
-      //             curve: Curves.fastLinearToSlowEaseIn,
-      //             height: 56,
-      //             width: index == currentIndex ? 96 : 56,
-      //             margin:
-      //                 const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-      //             child: AnimatedContainer(
-      //               duration: const Duration(seconds: 1),
-      //               curve: Curves.fastLinearToSlowEaseIn,
-      //               decoration: BoxDecoration(
-      //                   color: Colors.white,
-      //                   borderRadius: BorderRadius.circular(8)),
-      //             ),
-      //           ),
-      //           AnimatedContainer(
-      //             duration: const Duration(seconds: 1),
-      //             curve: Curves.fastLinearToSlowEaseIn,
-      //             child: Stack(
-      //               children: [
-      //                 Padding(
-      //                   padding: const EdgeInsets.symmetric(horizontal: 18),
-      //                   child: Row(
-      //                     children: [
-      //                       currentIndex == index
-      //                           ? Image.asset(
-      //                               'assets/icons/${activeIcons[index]}')
-      //                           : Image.asset('assets/icons/${icons[index]}'),
-      //                       Padding(
-      //                         padding: const EdgeInsets.all(6.0),
-      //                         child: AnimatedContainer(
-      //                           duration: const Duration(seconds: 1),
-      //                           curve: Curves.fastLinearToSlowEaseIn,
-      //                         ),
-      //                       ),
-      //                       AnimatedOpacity(
-      //                         opacity: index == currentIndex ? 1 : 0,
-      //                         duration: const Duration(seconds: 1),
-      //                         curve: Curves.fastLinearToSlowEaseIn,
-      //                         child: Center(
-      //                           child: Text(
-      //                             index == currentIndex
-      //                                 ? '${navText[index]}'
-      //                                 : '',
-      //                             style: const TextStyle(
-      //                               color: Color(0xff4c7380),
-      //                               fontWeight: FontWeight.w700,
-      //                               fontSize: caption1,
-      //                             ),
-      //                           ),
-      //                         ),
-      //                       ),
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           )
-      //         ],
-      //       ),
-      //     ),
-      //   ),
-      // ),
       bottomNavigationBar: const Navbar(),
     );
   }
@@ -680,7 +581,8 @@ class PowerUsageContainer extends StatelessWidget {
       height: 60,
       width: 152,
       decoration: BoxDecoration(
-          color: Colors.white30, borderRadius: BorderRadius.circular(20)),
+          color: Colors.white30, 
+          borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(4.5),
         child: Row(

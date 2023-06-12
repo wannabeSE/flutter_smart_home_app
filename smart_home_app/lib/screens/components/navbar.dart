@@ -33,12 +33,12 @@ class _NavbarState extends State<Navbar> {
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             if (index == 0) {
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushNamed(context, '/homeScreen');
             } else if (index == 1) {
               Navigator.pushNamed(context, '/room');
             }
             else if (index == 2) {
-              Navigator.pushNamed(context, '/room');
+              Navigator.pushNamed(context, '/usage');
             }
             else {
               Navigator.pushNamed(context, '/room');
@@ -56,7 +56,7 @@ class _NavbarState extends State<Navbar> {
                 curve: Curves.fastLinearToSlowEaseIn,
                 height: 56,
                 width: index == currentIndex ? 96 : 56,
-                margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
                 child: AnimatedContainer(
                   duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
