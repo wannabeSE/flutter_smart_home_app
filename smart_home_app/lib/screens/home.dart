@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_home_app/screens/components/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +14,16 @@ const double body1 = 18;
 const double body2 = 16;
 const double body3 = 14;
 const String font = 'Roboto';
+int currentIndex = 0;
+double navigationContainerWidth = 352;
+List navText = ['Home', 'Smart', 'Usage', 'User'];
+List icons = ['home.png', 'net.png', 'pie.png', 'user.png'];
+List activeIcons = [
+  'home_fill.png',
+  'net_fill.png',
+  'pie_fill.png',
+  'user_fill.png'
+];
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
@@ -197,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     iconPath: 'lampon.png',
                   ),
                   PowerUsageContainer(
-                    power: '100',
+                    power: '89.9',
                     iconPath: 'ac.png',
                   ),
                 ],
@@ -314,14 +325,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   unit: 'Temperature',
                 ),
                 ActiveContainer(
-                  iconPath: 'assets/icons/hang_lamp.png', 
-                  button: 'assets/icons/off.png', 
-                  temperature: false, 
-                  deviceType: 'Lamp', 
-                  room: 'Dining Room', 
-                  state: 'White', 
-                  unit: 'Color'
-                ),
+                    iconPath: 'assets/icons/hang_lamp.png',
+                    button: 'assets/icons/on.png',
+                    temperature: false,
+                    deviceType: 'Lamp',
+                    room: 'Dining Room',
+                    state: 'White',
+                    unit: 'Color'),
               ],
             ),
             Padding(
@@ -330,19 +340,102 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 50,
                 width: 342,
                 child: MaterialButton(
-                  onPressed: (){},
-                  child: const CustomText(
-                    text: 'Turn Off All Devices', 
-                    fontSize: body3, 
-                    fontFamily: font, 
-                    fontWeight: FontWeight.w600
-                  )
-                ),
+                    onPressed: () {},
+                    child: const CustomText(
+                        text: 'Turn Off All Devices',
+                        fontSize: body3,
+                        fontFamily: font,
+                        fontWeight: FontWeight.w600)),
               ),
-            )
+            ),
           ],
         ),
       ),
+      // bottomNavigationBar: Container(
+      //   height: 64,
+      //   width: 350,
+      //   padding: const EdgeInsets.symmetric(horizontal: 37.5),
+      //   decoration: BoxDecoration(
+      //       color: const Color(0xff4c7380),
+      //       borderRadius: BorderRadius.circular(10)),
+      //   child: ListView.builder(
+      //     itemCount: 4,
+      //     scrollDirection: Axis.horizontal,
+      //     itemBuilder: (context, index) => InkWell(
+      //       onTap: () {
+      //         setState(() {
+      //           currentIndex = index;
+      //         });
+              
+      //       },
+      //       splashColor: Colors.transparent,
+      //       highlightColor: Colors.transparent,
+      //       child: Stack(
+      //         children: [
+      //           AnimatedContainer(
+      //             duration: const Duration(seconds: 1),
+      //             curve: Curves.fastLinearToSlowEaseIn,
+      //             height: 56,
+      //             width: index == currentIndex ? 96 : 56,
+      //             margin:
+      //                 const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+      //             child: AnimatedContainer(
+      //               duration: const Duration(seconds: 1),
+      //               curve: Curves.fastLinearToSlowEaseIn,
+      //               decoration: BoxDecoration(
+      //                   color: Colors.white,
+      //                   borderRadius: BorderRadius.circular(8)),
+      //             ),
+      //           ),
+      //           AnimatedContainer(
+      //             duration: const Duration(seconds: 1),
+      //             curve: Curves.fastLinearToSlowEaseIn,
+      //             child: Stack(
+      //               children: [
+      //                 Padding(
+      //                   padding: const EdgeInsets.symmetric(horizontal: 18),
+      //                   child: Row(
+      //                     children: [
+      //                       currentIndex == index
+      //                           ? Image.asset(
+      //                               'assets/icons/${activeIcons[index]}')
+      //                           : Image.asset('assets/icons/${icons[index]}'),
+      //                       Padding(
+      //                         padding: const EdgeInsets.all(6.0),
+      //                         child: AnimatedContainer(
+      //                           duration: const Duration(seconds: 1),
+      //                           curve: Curves.fastLinearToSlowEaseIn,
+      //                         ),
+      //                       ),
+      //                       AnimatedOpacity(
+      //                         opacity: index == currentIndex ? 1 : 0,
+      //                         duration: const Duration(seconds: 1),
+      //                         curve: Curves.fastLinearToSlowEaseIn,
+      //                         child: Center(
+      //                           child: Text(
+      //                             index == currentIndex
+      //                                 ? '${navText[index]}'
+      //                                 : '',
+      //                             style: const TextStyle(
+      //                               color: Color(0xff4c7380),
+      //                               fontWeight: FontWeight.w700,
+      //                               fontSize: caption1,
+      //                             ),
+      //                           ),
+      //                         ),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      bottomNavigationBar: const Navbar(),
     );
   }
 }
@@ -367,16 +460,14 @@ class ActiveContainer extends StatefulWidget {
 }
 
 class _ActiveContainerState extends State<ActiveContainer> {
-
   final TextSpan celsius = const TextSpan(
-                              text: 'c',
-                              style: TextStyle(
-                                  fontFamily: font,
-                                  fontSize: caption1,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white));
+      text: 'c',
+      style: TextStyle(
+          fontFamily: font,
+          fontSize: caption1,
+          fontWeight: FontWeight.w400,
+          color: Colors.white));
 
-  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -414,21 +505,17 @@ class _ActiveContainerState extends State<ActiveContainer> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
-                        child: Text.rich(
+                        child: Text.rich(TextSpan(children: [
                           TextSpan(
-                            children: [
-                              TextSpan(
-                                text: widget.state,
-                                style: const TextStyle(
-                                    fontFamily: font,
-                                    fontSize: body1,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                              widget.temperature ? celsius : const TextSpan()
-                            ]
-                          )
-                        ),
+                            text: widget.state,
+                            style: const TextStyle(
+                                fontFamily: font,
+                                fontSize: body1,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                          widget.temperature ? celsius : const TextSpan()
+                        ])),
                       ),
                     ],
                   ),
@@ -468,9 +555,7 @@ class _ActiveContainerState extends State<ActiveContainer> {
               Padding(
                 padding: const EdgeInsets.only(top: 11),
                 child: SizedBox(
-                    height: 24,
-                    width: 55,
-                    child: Image.asset(widget.button)),
+                    height: 24, width: 55, child: Image.asset(widget.button)),
               )
             ],
           )
